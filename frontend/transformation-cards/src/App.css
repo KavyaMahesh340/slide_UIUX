@@ -1,184 +1,300 @@
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
+/* ============================================================
+   Reference-format transformation grid — hard reset
+   ============================================================ */
 
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-}
-
-.hero {
-  position: relative;
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
-}
-
-#center {
+.app {
   display: flex;
   flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
-
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
+  min-height: 100svh;
+  padding: 0 clamp(18px, 4vw, 48px);
 }
 
-#next-steps {
+/* ---------- Minimal header ---------- */
+
+.site-header {
   display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
+  align-items: center;
+  justify-content: space-between;
+  width: min(82vw, 1200px);
+  margin: 0 auto;
+  padding: clamp(16px, 2.6vh, 26px) 2px 0;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: #8a8477;
 }
 
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-}
-
-#next-steps ul {
-  list-style: none;
-  padding: 0;
+.header-brand {
   display: flex;
+  align-items: center;
   gap: 8px;
-  margin: 32px 0 0;
-
-  .logo {
-    height: 18px;
-  }
-
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-  }
+  color: #332f27;
+  font-weight: 600;
 }
 
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
+.header-brand svg {
+  color: #4f9d63;
 }
 
-.ticks {
+.header-control {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: #4f9d63;
+  color: #fff;
+  box-shadow: 0 1px 4px rgba(30, 26, 18, 0.18);
+}
+
+/* ---------- Main: grid vertically centered in remaining space ---------- */
+
+.transformation-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+}
+
+.transformation-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  width: min(82vw, 1200px);
+  height: clamp(520px, 68vh, 650px);
+  margin: 0 auto;
+}
+
+/* ============================================================
+   Column — 2 stacked cards, seam between them
+   ============================================================ */
+
+.transformation-column {
+  position: relative;
+  height: 100%;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+  min-width: 0;
+  min-height: 0;
+}
+
+.transformation-column,
+.transformation-column * {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ============================================================
+   Card — large rectangular panel, fills its grid row (50%)
+   ============================================================ */
+
+.transformation-card {
+  appearance: none;
   position: relative;
   width: 100%;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(20, 17, 12, 0.08);
+  border-radius: 10px;
+  background: #faf9f5;
+  overflow: hidden;
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+  outline: none;
+  transition:
+    border-color 0.35s ease,
+    background-color 0.35s ease;
+}
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
-  }
+.transformation-card:hover {
+  border-color: rgba(20, 17, 12, 0.16);
+}
 
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
+.transformation-card:focus-visible {
+  outline: 2px solid #4f9d63;
+  outline-offset: 2px;
+}
+
+/* Active: the selected card stretches over both rows of its column
+   (same width, full column height — the two cards become one). */
+.transformation-column.active .transformation-card.is-active {
+  grid-row: 1 / span 2;
+  z-index: 2;
+  background: #211d16;
+}
+
+/* Partner card stays in its cell (keeps the exact footprint). */
+.transformation-column.active .transformation-card.is-hidden {
+  visibility: hidden;
+}
+
+.transformation-card__title {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: clamp(1rem, 1.4vw, 1.18rem);
+  letter-spacing: 0.01em;
+  line-height: 1.25;
+  text-align: center;
+  color: #221e17;
+  transition: transform 0.35s ease;
+}
+
+.transformation-card:hover .transformation-card__title {
+  transform: translateY(-1px);
+}
+
+/* ---------- Active card: image fills the entire tall card ---------- */
+
+.active-image {
+  position: absolute;
+  inset: 0;
+}
+
+.active-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.active-image__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(18, 14, 10, 0.78) 0%,
+    rgba(18, 14, 10, 0.3) 38%,
+    rgba(18, 14, 10, 0) 66%
+  );
+}
+
+.active-content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 7px;
+  padding: 0 22px clamp(20px, 3vh, 28px);
+  text-align: center;
+  font-family: var(--font-sans);
+}
+
+.active-content__title {
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  font-weight: 550;
+  letter-spacing: 0.005em;
+  color: #fff;
+}
+
+.active-content__desc {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 32ch;
+}
+
+/* ============================================================
+   Seam control — absolute, exactly on the center seam
+   ============================================================ */
+
+.seam-control {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -17px 0 0 -17px;
+  z-index: 20;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 11px;
+  background: #4f9d63;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 2px 8px rgba(30, 26, 18, 0.2);
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    top 0.72s cubic-bezier(0.22, 1, 0.36, 1),
+    margin-top 0.72s cubic-bezier(0.22, 1, 0.36, 1),
+    border-radius 0.35s ease,
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.seam-control:hover {
+  background: #59a86e;
+}
+
+.seam-control:focus-visible {
+  outline: 2px solid #4f9d63;
+  outline-offset: 2px;
+}
+
+.seam-control__icon {
+  display: grid;
+  place-items: center;
+  line-height: 0;
+}
+
+/* Active: control moves to the upper portion of the expanded card
+   and becomes a small white circle. */
+.transformation-column.active .seam-control {
+  top: 20px;
+  margin-top: 0;
+  border-radius: 50%;
+  background: #fff;
+  color: #221e17;
+  box-shadow: 0 2px 10px rgba(20, 16, 10, 0.25);
+}
+
+.transformation-column.active .seam-control:hover {
+  background: #fff;
+}
+
+/* ============================================================
+   Responsive — desktop first
+   ============================================================ */
+
+@media (max-width: 900px) {
+  .transformation-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    height: auto;
   }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
+  .transformation-column {
+    height: clamp(320px, 46vh, 420px);
+  }
+}
+
+@media (max-width: 560px) {
+  .transformation-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   Reduced motion
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .transformation-card,
+  .seam-control {
+    transition: none;
   }
 }
